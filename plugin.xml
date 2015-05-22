@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-  id="com.intel.xdk.geolocation"
+  id="intel.xdk.geolocation"
   version="0.0.1">
   <name>Intel XDK Geolocation</name>
   <description>Intel XDK Geolocation Plugin</description>
