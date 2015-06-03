@@ -1,11 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 2015 Intel Corporation
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file 
+except in compliance with the License. You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the 
+License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+either express or implied. See the License for the specific language governing permissions 
+and limitations under the License
+-->
+
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-  id="intel.xdk.geolocation"
-  version="0.0.1">
-  <name>Intel XDK Geolocation</name>
-  <description>Intel XDK Geolocation Plugin</description>
-  <license>Apache 2.0</license>
-  <keywords>intel,xdk,geolocation</keywords>
+    id="intel.xdk.geolocation"
+    version="1.1.0">
+    <name>Intel XDK Geolocation</name>
+    <description>Intel XDK Geolocation Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>Intel XDK, intel.xdk, geolocation</keywords>
+    <repo>https://github.com/01org/cordova-plugin-intel-xdk-geolocation.git</repo>
+    <issue></issue>
+
+    <!-- windows8 -->
+    <platform name="windows8">
+        <config-file target="package.appxmanifest" parent="/Package/Capabilities">
+            <DeviceCapability Name="location" />
+        </config-file>
+
+        <js-module src="www/coords.js" name="coords">
+            <clobbers target="intel.xdk.coords" />
+        </js-module>
+
+        <js-module src="www/position.js" name="position">
+            <clobbers target="intel.xdk.position" />
+        </js-module>
+
+        <js-module src="www/geolocation.js" name="geolocation">
+            <clobbers target="intel.xdk.geolocation" />
+        </js-module>
+
+        <js-module src="src/windows8/geolocationProxy.js" name="GeolocationProxy">
+            <merges target="" />
+        </js-module>
+    </platform>
+   
+   <!-- wp8 -->
+    <platform name="wp8">
+        <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
+            <Capability Name="ID_CAP_LOCATION" />
+        </config-file>
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="IntelXDKGeolocation">
+                <param name="wp-package" value="IntelXDKGeolocation"/>
+            </feature>
+        </config-file>
+
+        <js-module src="www/coords.js" name="coords">
+            <clobbers target="intel.xdk.coords" />
+        </js-module>
+
+        <js-module src="www/position.js" name="position">
+            <clobbers target="intel.xdk.position" />
+        </js-module>
+
+        <js-module src="www/geolocation.js" name="geolocation">
+            <clobbers target="intel.xdk.geolocation" />
+        </js-module>
+
+       <source-file src="src/wp8/Geolocation.cs" />
+    </platform>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="IntelXDKGeolocation">
+                <param name="android-package" value="com.intel.xdk.geolocation.Geolocation"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/*">
+		<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+		<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+        </config-file>
+
+        <js-module src="www/coords.js" name="coords">
+            <clobbers target="intel.xdk.coords" />
+        </js-module>
+
+        <js-module src="www/position.js" name="position">
+            <clobbers target="intel.xdk.position" />
+        </js-module>
+
+        <js-module src="www/geolocation.js" name="geolocation">
+            <clobbers target="intel.xdk.geolocation" />
+        </js-module>
+
+        <source-file src="src/android/Geolocation.java" target-dir="src/com/intel/xdk/geolocation" />
+    </platform>
+
+    <!-- iOS -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="IntelXDKGeolocation">
+                <param name="ios-package" value="XDKGeolocation" />
+            </feature>
+        </config-file>
+    
+        <js-module src="src/ios/geolocation.js" name="geolocation">
+            <clobbers target="intel.xdk.geolocation" />
+        </js-module>
+    </platform>
 
 </plugin>

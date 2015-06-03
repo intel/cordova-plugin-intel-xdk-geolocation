@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <!--meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" /-->
+        <meta name="viewport" content="width=device-width"/>
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>Hello World</title>
+        
+    </head>
+    <body>
+                <div style="position:absolute;left:20px;top:20px;">
+                    <span>Current Coordinates</span><br />
+                    Latitude : <span id="geoLat"></span><br />
+                    Longitude: <span id="geoLng"></span><br />
+                    Altitude : <span id="geoAltitude"></span><br />
+                    Accuracy : <span id="geoAccuracy"></span><br />
+                    AltitudeAccuracy : <span id="geoAltitudeAccuracy"></span><br />
+                    Heading : <span id="geoHeading"></span><br />
+                    Speed : <span id="geoSpeed"></span><br />
+                    Timestamp : <span id="geoTimestamp"></span><br />
+                </div>
+
+    <div class="app">
+            <h1>Apache Cordova</h1>
+            <div id="deviceready" class="blink">
+                <p class="event listening">Connecting to Device</p>
+                <p class="event received">Device is Ready</p>
+            </div>
+    
+
+                <button onclick="getLocation()">Get Current Location</button><br />
+                <button onclick="watchPosition()">Watch Location</button>
+                <button onclick="clearWatch()">Clear Watch</button><br />
+                <button onclick="clearData()">Clear Location Data</button><br />
+    </div>
+
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+
+var watchId;
+
+var getLocation = function () {
+    var getSuc = function (p) {
+        // breaks windows8
+        //alert("geolocation success");
+        if (p.coords.latitude != undefined) {
+            updateCoorValues(p);
+        }
+
+    };
+    var getFail = function () {
+        // breaks windows8
+        //alert("geolocation failed");
+        getLocation();
+    };
+
+    intel.xdk.geolocation.getCurrentPosition(getSuc, getFail);
+}
+
+var watchPosition = function () {
+    var watchSuc = function (p) {
+        // breaks windows8
+        //alert("geolocation success");
+        if (p.coords.latitude != undefined) {
+            updateCoorValues(p);
+        }
+    };
+
+    var watchFail = function () {
+        // breaks windows8
+        //alert("geolocation failed");
+        getLocation();
+    };
+
+    watchId = intel.xdk.geolocation.watchPosition(watchSuc, watchFail);
+}
+
+var clearWatch = function () {
+    intel.xdk.geolocation.clearWatch(watchId);
+}
+
+function updateCoorValues(p) {
+    document.getElementById("geoLat").innerText = p.coords.latitude;
+    document.getElementById("geoLng").innerText = p.coords.longitude;
+    document.getElementById("geoAltitude").innerText = p.coords.altitude;
+    document.getElementById("geoAccuracy").innerText = p.coords.accuracy;
+    document.getElementById("geoAltitudeAccuracy").innerText = p.coords.altitudeAccuracy;
+    document.getElementById("geoHeading").innerText = p.coords.heading;
+    document.getElementById("geoSpeed").innerText = p.coords.speed;
+    document.getElementById("geoTimestamp").innerText = p.timestamp;
+}
+
+
+function clearData() {
+    document.getElementById("geoLat").innerText = "";
+    document.getElementById("geoLng").innerText = "";
+    document.getElementById("geoAltitude").innerText = "";
+    document.getElementById("geoAccuracy").innerText = "";
+    document.getElementById("geoAltitudeAccuracy").innerText = "";
+    document.getElementById("geoHeading").innerText = "";
+    document.getElementById("geoSpeed").innerText = "";
+    document.getElementById("geoTimestamp").innerText = "";
+}            
+        </script>
+    </body>
+</html>
