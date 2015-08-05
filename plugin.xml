@@ -24,6 +24,29 @@ and limitations under the License
     <repo>https://github.com/01org/cordova-plugin-intel-xdk-geolocation.git</repo>
     <issue></issue>
 
+    <!-- windows -->
+    <platform name="windows">
+        <config-file target="package.appxmanifest" parent="/Package/Capabilities">
+            <DeviceCapability Name="location" />
+        </config-file>
+
+        <js-module src="www/coords.js" name="coords">
+            <clobbers target="intel.xdk.coords" />
+        </js-module>
+
+        <js-module src="www/position.js" name="position">
+            <clobbers target="intel.xdk.position" />
+        </js-module>
+
+        <js-module src="www/geolocation.js" name="geolocation">
+            <clobbers target="intel.xdk.geolocation" />
+        </js-module>
+
+        <js-module src="src/windows8/geolocationProxy.js" name="GeolocationProxy">
+            <merges target="" />
+        </js-module>
+    </platform>
+   
     <!-- windows8 -->
     <platform name="windows8">
         <config-file target="package.appxmanifest" parent="/Package/Capabilities">
