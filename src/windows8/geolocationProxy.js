@@ -1,3 +1,4 @@
+
 /*
 Copyright 2015 Intel Corporation
 
@@ -30,7 +31,6 @@ and limitations under the License
     listeners: new Array(),*/
 
     getCurrentPosition: function(successCallback, errorCallback, params) {
-        //alert('hi ryan');
         successCallbackID = params[0];
         errorCallbackID = params[1];
         maximumAge = params[2];
@@ -61,7 +61,8 @@ and limitations under the License
                 var speed = (coord.speed != null) ? coord.speed : "0.00";
                 var timestamp = coord.timestamp;
 
-                intel.xdk.geolocation.successCB(successCallbackID, lat, lng, alt, acc, altAcc, head, speed, timestamp);
+                successCallback({ successCallbackID: successCallbackID, lat: lat, lng: lng, alt: alt, acc: acc, altAcc: altAcc, head: head, speed: speed, timestamp: timestamp });
+                //intel.xdk.geolocation.successCB(successCallbackID, lat, lng, alt, acc, altAcc, head, speed, timestamp);
             },
             function (err) {
                 // Handle the error.
